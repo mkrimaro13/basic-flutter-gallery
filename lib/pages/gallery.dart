@@ -285,7 +285,7 @@ class GalleryPage extends StatelessWidget {
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            Colors.black.withOpacity(0.1),
+                            Colors.black.withValues(alpha: 0.1),
                           ],
                         ),
                       ),
@@ -366,7 +366,7 @@ class MediaViewerScreen extends StatelessWidget {
                         Icon(
                           Icons.play_circle_outline,
                           size: 100,
-                          color: Colors.white.withOpacity(0.7),
+                          color: Colors.white.withValues(alpha: 0.7),
                         ),
                         const SizedBox(height: 16),
                         const Text(
