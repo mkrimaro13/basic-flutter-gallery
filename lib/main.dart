@@ -1,15 +1,34 @@
+import 'dart:developer';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:media_gallery/controllers/camera.dart';
+import 'package:media_gallery/controllers/gallery.dart';
+import 'package:media_gallery/home.dart';
 import 'package:media_gallery/pages/permissions.dart';
 import 'package:media_gallery/permissions/permissions.dart';
 import 'package:media_gallery/style/colors.dart';
 import 'package:media_gallery/style/theme.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'home.dart';
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarContrastEnforced: false,
+    ),
+  );
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   Get.put(PermissionsManager());
+  Get.put(GalleryController());
+  final List<CameraDescription> cameras =
+      await availableCameras(); // -> obtiene las cámaras
+  log(cameras.toString());
+  Get.put(CustomCameraController(cameras: cameras));
   runApp(const MyApp());
 }
 

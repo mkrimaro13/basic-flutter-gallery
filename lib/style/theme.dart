@@ -29,6 +29,13 @@ ThemeData appTheme(Brightness brightness, ThemeColors colors) {
         fontWeight: FontWeight.bold,
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: colors.secondary,
+      foregroundColor: colors.text,
+      elevation: 5,
+      splashColor: colors.accent,
+      shape: CircleBorder()
+    ),
     cardTheme: CardTheme(
       color: colors.background,
       shadowColor: colors.accent,

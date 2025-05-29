@@ -11,7 +11,7 @@ class GalleryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(GalleryController());
+    final controller = Get.find<GalleryController>();
     final ScrollController scrollController = ScrollController();
 
     // Se agregar un listener (escucha constante mente y si pasa algo se activa) para cargar mas archivos cuando se llega a una cierta parte de la pantalla.
@@ -145,13 +145,54 @@ class GalleryPage extends StatelessWidget {
               );
 
               return RefreshIndicator(
+                // ->https://api.flutter.dev/flutter/material/RefreshIndicator-class.html, permite hacer que cuando se llegue hasta la parte de arriba, se haga un poco mas de scroll para "recargar" y ejecutar una función
                 onRefresh: () => controller.loadMedia(refresh: true),
                 child: CustomScrollView(
+                  // ¿Por qué Slivers?
+                  // [Understand the Difference between Box and Slivers Widgets in Flutter - Flutter Tricks](https://flutter-tricks.com/understand-the-difference-between-box-and-slivers-widgets-in-flutter)
+                  // los Slivers en lista permiten tener tamaños dinámicos y están mas optimizados para
+                  // ser usado en cosas que han scroll, como las listas o las cuadrículas.
+                  // un fragmento:
+                  // Use slivers when you need a dynamic and scrollable layout. Slivers are ideal for creating lists, grids, and other scrollable content. They provide advanced features like lazy loading and dynamic sizing, which can greatly improve performance.
+                  physics:
+                      BouncingScrollPhysics(), // -> Esa física de rebote similar a la que usa en aplicaciones iOS.
                   controller: scrollController,
                   slivers: [
                     SliverPadding(
                       padding: const EdgeInsets.all(4),
-                      sliver: SliverToBoxAdapter(
+                      sliver:
+                      // SliverGrid( // -> https://api.flutter.dev/flutter/widgets/SliverGrid-class.html según la teoría este Widget es mejor para cargar los elementos, pero el problema es acceder al Aspect Ratio, ya que se requiere el ancho y el alto del elemento multimedia que se va acceder, pero no hay forma de acceder (o no la sé) de acceder a los elementos de manera programática
+                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //     crossAxisCount: columns,
+                      //     mainAxisSpacing: 4,
+                      //     crossAxisSpacing: 4,
+                      //     childAspectRatio: controller.mediaItems.indexOf(element)
+                      //   ),
+                      //   delegate: SliverChildBuilderDelegate(
+                      //     (context, index) {
+                      //       final item = controller.mediaItems[index];
+                      //       return _buildMediaTile(item, controller);
+                      //     },
+                      //     childCount: controller.mediaItems.length,
+                      //   ),
+                      // )
+                      // SliverMasonryGrid( // -> https://pub.dev/documentation/flutter_staggered_grid_view/latest/flutter_staggered_grid_view/SliverMasonryGrid-class.html es la manera "correcta" de lograr la vista estilizada
+                      //   gridDelegate: SliverChildDelegate(
+                      //     crossAxisCount: columns,
+                      //     mainAxisSpacing: 4,
+                      //     crossAxisSpacing: 4,
+                      //     childAspectRatio: controller.mediaItems.indexOf(element)
+                      //   ),
+                      //   delegate: SliverChildBuilderDelegate(
+                      //     (context, index) {
+                      //       final item = controller.mediaItems[index];
+                      //       return _buildMediaTile(item, controller);
+                      //     },
+                      //     childCount: controller.mediaItems.length,
+                      //   ),
+                      // )
+                      SliverToBoxAdapter(
+                        // -> https://api.flutter.dev/flutter/widgets/SliverToBoxAdapter-class.html es un adaptador entre los Slivers y los Box Widgets
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children:
@@ -313,10 +354,10 @@ class MediaViewerScreen extends StatelessWidget {
   final int initialIndex;
 
   const MediaViewerScreen({
-    Key? key,
+    super.key,
     required this.mediaItem,
     required this.initialIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -359,23 +400,21 @@ class MediaViewerScreen extends StatelessWidget {
                       );
                     },
                   )
-                  : Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.play_circle_outline,
-                          size: 100,
-                          color: Colors.white.withValues(alpha: 0.7),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Video Player\n(Implement video player here)',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ],
-                    ),
+                  : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.play_circle_outline,
+                        size: 100,
+                        color: Colors.white.withValues(alpha: 0.7),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Video Player\n(Implement video player here)',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
                   ),
         ),
       ),

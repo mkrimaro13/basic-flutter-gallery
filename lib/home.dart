@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controllers/home.dart';
-import 'widgets/home/navigationbar.dart';
 
 class HomePage extends StatelessWidget {
   final int? initialIndex;
@@ -14,18 +13,13 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(toolbarHeight: 0, elevation: 0),
       body: RepaintBoundary(
         child: PageView.builder(
+          scrollDirection: Axis.horizontal,
           controller: controller.pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           itemCount: controller.pages.length,
           itemBuilder: (context, index) {
             return controller.pages[index];
           },
-        ),
-      ),
-      bottomNavigationBar: Obx(
-        () => CustomBottomNavigationBar(
-          selectedIndex: controller.selectedIndex.value,
-          onItemTapped: controller.onItemTapped,
         ),
       ),
     );

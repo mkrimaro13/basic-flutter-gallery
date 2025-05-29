@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:media_gallery/pages/camera.dart';
 import 'package:media_gallery/pages/gallery.dart';
-import 'package:media_gallery/pages/profile.dart';
 
 class HomeController extends GetxController {
   late final PageController pageController;
   var selectedIndex = 0.obs;
   final int initialIndex;
 
-  final List<Widget> pages = [GalleryPage(), CameraPage(), ProfilePage()];
+  final List<Widget> pages = [GalleryPage(), CameraPage()];
 
   HomeController({this.initialIndex = 0});
 

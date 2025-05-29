@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Storage permissions for Android 12 and below -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32"/>
+        android:maxSdkVersion="32"
+        tools:targetApi="4" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
     <!-- Granular media permissions for Android 13+ -->
@@ -13,12 +14,15 @@
     <!-- Camera permission -->
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="true"
+        tools:targetApi="5" />
     <application
+        android:requestLegacyExternalStorage="true"
         android:label="media_gallery"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:enableOnBackInvokedCallback="true">
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="33">
         <activity
             android:name=".MainActivity"
             android:exported="true"

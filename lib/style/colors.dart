@@ -37,7 +37,7 @@ class LightThemeColors extends ThemeColors {
         secondary: const Color(0xFF9EC6F3),
         background: const Color(0xFFEAEFEF),
         accent: const Color(0xFFD4C9BE),
-        text: const Color(0xFF333446),
+        text: const Color(0xFF000000),
         border: const Color(0xFFB8CFCE),
       );
 }
@@ -51,7 +51,7 @@ class DarkThemeColors extends ThemeColors {
         primary: const Color(0xFFB8CFCE),
         secondary: const Color(0xFF7F8CAA),
         accent: const Color(0xFF123458),
-        text: const Color(0xFFEAEFEF),
+        text: const Color(0xFFF2F2F2),
         border: const Color(0xFFD4C9BE),
       );
 }

@@ -30,11 +30,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
               Icons.camera_alt_outlined,
               'Cámara',
             ),
-            _buildNavItem(
-              Icons.person_2_rounded,
-              Icons.person_2_outlined,
-              'Perfil',
-            ),
+            // _buildNavItem(
+            //   Icons.person_2_rounded,
+            //   Icons.person_2_outlined,
+            //   'Perfil',
+            // ),
           ],
         ));
   }
